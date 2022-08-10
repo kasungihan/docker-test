@@ -1,8 +1,9 @@
 # getting baseimage ubuntu
-FROM ubuntu
+FROM node:apline
 
-MAINTAINER Kasun Gihan >kasungihan.dev@gmail.com>
 
-RUN apt-get update
+RUN . /public
+
+WORKDIR /public
 
 CMD [ "echo", "Hello World.."]
