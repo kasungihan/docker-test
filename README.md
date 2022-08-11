@@ -22,3 +22,95 @@ hypervisors kernal layer - virualbox - VMware - hyper-v(windowns)
 full copy of os, slow to start, limet by resources hardware
 
 docker maintain a Dockerfile that could be image creating file application need
+
+### list docker image and container
+
+`docker image ls`
+`docker container ls`
+
+### create and run dockerfile to image
+
+`docker run <imagename>`
+
+- cut down os
+- third party libraies
+- application files
+- enviroment variables
+
+### run only existing image
+
+`docker run <imageID>`
+
+### list of process or containers
+
+running: `docker ps`
+
+- isolated envoronment
+- can be stopped and restarted
+- is just a os process
+
+### how to docker image push to docker repository
+
+1. create account docker hub or login
+2. create repository for your project
+3. follow this docs: https://docs.docker.com/docker-hub/repos/
+4. name your local image to usename/repository
+   `docker image tag d583c3ac45fd usename/repository:latest`
+5. push to docker hub
+   `docker push <usename>/<repository>`
+6. if you to run this another machine install docker with compatibale version
+   `docker pull <usename>/<repository>`
+7. run image
+   `docker run <usename>/<repository>` or `docker run <imageID>`
+
+we must need to learn linux basic command
+
+linux distribution
+
+- ubuntu
+- debian
+- alpine
+- ferdora
+- centos
+
+package managers on dev tools
+
+- npm
+- yarm
+- pip
+- NuGet
+
+linux distribute package manager
+
+- apt list
+
+filesystem and structures
+
+- etc = editable text configuation
+- lib = library
+
+.bashrc file is
+
+manage users
+`useradd -m gihan` or `adduser kasun` // more interactive
+`grep -i /etc/passwd`
+`usermod -s /bin/bash gihan`
+
+`groupadd dev`
+`cat /etc/group`
+`usermod -G dev gihan`
+
+play with debian distribution container
+`docker run debian`
+
+### interacting with container
+
+`docker run -it <imagename>`
+`docker exec <containerID> bash`
+`docker exec -it -u john <containerID> bash`
+
+if you change something on container after exited container changes are not anymore there we have to write presistans layer
+
+### start same container again
+
+`docker start -i <containerID>`
