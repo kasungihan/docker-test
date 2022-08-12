@@ -164,10 +164,83 @@ check by `printenv` command on container
 
 #### 5th exposing ports
 
-add user on alpine
+```
+
+EXPOSE 3000
+```
+
+#### add user on alpine
+
+1. addgroup gihan
+2. adduser -S -G gihan gihan
+3. result on `cat .etc/group` should be gihan:x:1001:gihan also `groups gihan`
 
 ```
-RUN addgroup app && adduser -S -G app app
+RUN addgroup app && adduser -S -G app app // combin to single command
 
 USER app
+
 ```
+
+check by login sh and whoami
+
+#### 6th defining entrypoints & command instuction
+
+docker run react-app - container run and stop
+docker run react-app npm start- keep running container
+
+shell form - inside seperate shell
+
+- /bin/sh
+- cmd in windows
+
+`CMD npm start`
+
+exec form - easier and faster
+
+`CMD ["npm", "start"]`
+
+`ENTRYPOINT ["npm", "start"]`// override default command
+
+`docker history <container>`
+
+cache npm muduels
+
+# remove unnecessary images & container
+
+`docker image prune`
+`docker container prune`
+
+`docker image rm asd`
+
+### taging container
+
+### tar and load container
+
+## container more detilas
+
+- publishing ports
+- viewing logs
+- executing commands in container
+- remove
+- persisting data using volumes
+- sharing source code
+
+detage mode
+docker run -d reat-app
+docker run -d reat-app --name blue
+
+docker logs id
+docker logs -f id
+
+docker run -d -p 80:3000 react-app
+docker run -d -p 8001:3000 --name c2 react-app
+
+docker exec c2 ls
+docker exec -it c2 sh
+
+docker stop c2
+docker start c2
+
+docker run --name c2
+docker rm c2
