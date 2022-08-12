@@ -1,9 +1,17 @@
 # getting baseimage ubuntu
-FROM node:apline
+FROM node:16.16-alpine3.16
 
+RUN addgroup app && adduser -S -G app app
 
-RUN . /public
+USER app
 
-WORKDIR /public
+WORKDIR /app
 
-CMD [ "echo", "Hello World.."]
+COPY . .
+
+RUN npm install
+
+ENV NODE_ENV=production
+
+EXPOSE 3000
+
