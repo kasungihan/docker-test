@@ -114,3 +114,60 @@ if you change something on container after exited container changes are not anym
 ### start same container again
 
 `docker start -i <containerID>`
+
+### follow the docker sample docs for writing evey progarm lanuages
+
+https://docs.docker.com/samples/
+
+### docker build react app learn dockerfile
+
+#### 1st update 'Dockerfile'
+
+`FROM node:16.16-alpine3.16`
+
+then run and create image
+
+`docker build -t react-app .`
+
+run created image alpine go inside, do not have bash only can use sh
+`docker run -it react-app sh`
+
+#### 2nd update 'Dockerfile' | put project file to docker image related to that project
+
+```
+WORKDIR /app
+
+COPY . .
+
+ADD https://.../file.json .
+
+ADD file.zip . // automatically uncompresed
+
+```
+
+#### 3rd we don't need to copy node_modules folder `.dockeringore >> node_modules/`
+
+#### 4th run commands
+
+```
+RUN npm install
+RUN apt install python
+```
+
+#### 5th env variables
+
+```
+ENV NODE_ENV=production
+```
+
+check by `printenv` command on container
+
+#### 5th exposing ports
+
+add user on alpine
+
+```
+RUN addgroup app && adduser -S -G app app
+
+USER app
+```
