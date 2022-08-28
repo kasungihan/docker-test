@@ -49,20 +49,6 @@ running: `docker ps`
 - can be stopped and restarted
 - is just a os process
 
-### how to docker image push to docker repository
-
-1. create account docker hub or login
-2. create repository for your project
-3. follow this docs: https://docs.docker.com/docker-hub/repos/
-4. name your local image to usename/repository
-   `docker image tag d583c3ac45fd usename/repository:latest`
-5. push to docker hub
-   `docker push <usename>/<repository>`
-6. if you to run this another machine install docker with compatibale version
-   `docker pull <usename>/<repository>`
-7. run image
-   `docker run <usename>/<repository>` or `docker run <imageID>`
-
 we must need to learn linux basic command
 
 linux distribution
@@ -215,7 +201,39 @@ cache npm muduels
 
 ### taging container
 
-### tar and load container
+create tags for docker image
+`docker build -t kasungihan/dockertest:1.2.0 .`
+
+remove tag from image
+`docker image remove kasungihan/dockertest:1`
+
+derive tag from another if you would like to see the different check the image id
+`docker image tag kasungihan/dockertest:latest kasungihan/dockertest:1`
+
+given tag to latest
+`docker image tag bed5 kasungihan/dockertest:latest`
+
+### how to docker image push to docker repository
+
+1. create account docker hub or login
+2. create repository for your project
+3. follow this docs: https://docs.docker.com/docker-hub/repos/
+4. name your local image to usename/repository
+   `docker image tag d583c3ac45fd usename/repository:latest`
+5. push to docker hub
+   `docker push <usename>/<repository>`
+6. if you to run this another machine install docker with compatibale version
+   `docker pull <usename>/<repository>`
+7. run image
+   `docker run <usename>/<repository>` or `docker run <imageID>`
+
+### save and loading image another machine
+
+save image in your directory
+`docker image save -o dockertest.tar kasungihan/dockertest`
+
+give to the tar file to another developer and load in others machine
+`docker image load -i dockertest.tar`
 
 ## container more detilas
 
@@ -226,21 +244,72 @@ cache npm muduels
 - persisting data using volumes
 - sharing source code
 
-detage mode
-docker run -d reat-app
-docker run -d reat-app --name blue
+### detage mode
 
-docker logs id
-docker logs -f id
+`docker run -d reat-app`
+`docker run -d reat-app --name blue`
 
-docker run -d -p 80:3000 react-app
-docker run -d -p 8001:3000 --name c2 react-app
+### you can find out what is going on behavior in container
 
-docker exec c2 ls
-docker exec -it c2 sh
+`docker logs <id>`
+`docker logs -f <id>`
 
-docker stop c2
-docker start c2
+### publish a port on the host - pushing ports
 
-docker run --name c2
-docker rm c2
+`docker run -d -p 80:3000 react-app`
+`docker run -d -p 8001:3000 --name c2 react-app`
+
+### executing commands in running container - default cmd define in dockerfile
+
+`docker exec c2 ls`
+
+interactive mode is go inside container
+`docker exec -it c2 sh`
+
+### stop, start nad remove container
+
+`docker stop c2`
+`docker start c2`
+
+`docker run --name c2`
+`docker rm c2`
+
+what is different run, start, exec
+
+- run - start new container
+- start - start sopped or existing container
+- exec - go inside existing to container
+
+## containers file system run their own file system
+
+persisting data using volumes
+
+`docker volume create app-data`
+`docker volume ls`
+`docker volume inspect app-data` this is dir on the host
+
+if you delete container /data folder data won't effect shore volume to multiple container
+`docker run -d -p 8003:3000 -v app-data:/app/data react-app` old
+`docker run -d -p 8001:3000 -v app-data:/app/data react-app` new
+
+if you want to cp container to machine and machine to container
+`docker cp 468:/app/data/log.txt .` desnination and source
+`docker cp secret.txt 468:/app/data/`
+
+sharing the sourve code with a Container
+publiching changes
+
+- for production build a new image deploy
+- for development
+
+local environment to container environment
+`docker run -d -p 8003:3000 -v $(pwd):/app react-app`
+
+### clean up workspace
+
+`docker container rm -f $(docker container ls -a)`
+`docker image rm -f $(docker image ls -a)`
+
+## docker compose
+
+yaml vs json parsing speed
