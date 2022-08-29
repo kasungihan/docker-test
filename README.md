@@ -313,3 +313,27 @@ local environment to container environment
 ## docker compose
 
 yaml vs json parsing speed
+
+write a compose yml file following docs
+
+`docker-compose build`
+
+install container to one file
+`docker-compose up`
+
+list compose
+`docker-compose ps`
+
+stop and remove contianer
+`docker-compose down`
+
+## networking
+
+every docker installation have 3 networks bridge, host and none
+
+try to ping another container
+`docker exec -it 1f0 sh`
+
+same services network
+`ping web`
+`ifconfig`
