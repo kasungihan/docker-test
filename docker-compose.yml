@@ -1,10 +1,27 @@
 version: "3.8"
+
 services:
+  web:
+    build: .
+    ports:
+      - 9000:3000
+    volumes:
+      - ./:/app
+    command: npm start
+  web-tests:
+    image: dockertest_web
+    volumes:
+      - ./:/app
+    command: npm test
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+    ports:
+      - 8080:3306
+    volumes:
+      - dockertest:/var/lib/mysql
 
-    web:
-        image: nginx
-        ports:
-            - 9000:80
-
-    database:
-        image: redis
+volumes:
+  dockertest:
